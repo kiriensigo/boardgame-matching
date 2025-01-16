@@ -66,7 +66,8 @@ class BggApiService
           weight: item.at_xpath('.//statistics/ratings/averageweight')['value'].to_f
         }
       end
-  
+
+      
       def clean_description(text)
         return '' unless text
         text.gsub('&#10;', "\n").gsub(/&[a-zA-Z]+;/, ' ').strip
