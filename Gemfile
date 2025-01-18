@@ -35,11 +35,16 @@ gem 'devise-jwt'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 
+# セッション管理のため
+gem 'jquery-rails'
+
 # CORSの設定
 gem 'rack-cors'
 
 # 環境変数の管理
 gem 'dotenv-rails'
+
+gem 'sprockets-rails'
 
 # 開発環境用
 group :development, :test do
