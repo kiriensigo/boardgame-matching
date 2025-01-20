@@ -1,6 +1,6 @@
-"use client";
-import { useEffect, useState } from "react";
-import { login, logout } from "../lib/auth";
+'use client';
+import { useEffect, useState } from 'react';
+import { logout } from '../lib/auth';
 
 type ApiResponse = {
   status: string;
@@ -10,49 +10,32 @@ type ApiResponse = {
   };
 };
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const [apiData, setApiData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  // ログインフォームの送信処理
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    try {
-      const response = await login(email, password);
-      // ログイン成功後、ページの状態を更新
-      window.location.reload();
-    } catch (error) {
-      setError(
-        "ログインに失敗しました。メールアドレスとパスワードを確認してください。"
-      );
-    }
-  };
-
-  // ログアウト処理
   const handleLogout = async () => {
     try {
       await logout();
-      // ログアウト成功後、ページの状態を更新
       window.location.reload();
     } catch (error) {
-      setError("ログアウトに失敗しました。");
+      console.error('ログアウトエラー:', error);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/", {
-          credentials: "include", // Cookieを含める
+        const response = await fetch('http://localhost:3000/', {
+          credentials: 'include',
         });
         const data = await response.json();
         setApiData(data);
       } catch (error) {
-        console.error("エラーが発生しました:", error);
+        console.error('エラーが発生しました:', error);
       } finally {
         setLoading(false);
       }
@@ -72,15 +55,13 @@ export default function Home() {
       </h1>
 
       {error && (
-        <div
-          style={{
-            backgroundColor: "#f8d7da",
-            color: "#721c24",
-            padding: "10px",
-            borderRadius: "5px",
-            marginBottom: "10px",
-          }}
-        >
+        <div style={{
+          backgroundColor: '#f8d7da',
+          color: '#721c24',
+          padding: '10px',
+          borderRadius: '5px',
+          marginBottom: '10px'
+        }}>
           {error}
         </div>
       )}
@@ -88,15 +69,32 @@ export default function Home() {
       {apiData?.logged_in ? (
         <div>
           <p>ようこそ、{apiData.user?.email}さん！</p>
+          
+            href="/profile"
+            style={{
+              backgroundColor: '#007bff',
+              color: 'white',
+              padding: '10px',
+              border: 'none',
+              borderRadius: '5px',
+              width: '100%',
+              display: 'block',
+              textAlign: 'center',
+              textDecoration: 'none',
+              marginBottom: '10px'
+            }}
+          >
+            プロフィール
+          </a>
           <button
             style={{
-              backgroundColor: "#dc3545",
-              color: "white",
-              padding: "10px",
-              border: "none",
-              borderRadius: "5px",
-              width: "100%",
-              cursor: "pointer",
+              backgroundColor: '#dc3545',
+              color: 'white',
+              padding: '10px',
+              border: 'none',
+              borderRadius: '5px',
+              width: '100%',
+              cursor: 'pointer'
             }}
             onClick={handleLogout}
           >
@@ -105,80 +103,75 @@ export default function Home() {
         </div>
       ) : (
         <div>
-          <form onSubmit={handleLogin}>
-            <div style={{ marginBottom: "20px" }}>
-              <h2>ログイン</h2>
-              <input
-                type="email"
-                placeholder="メールアドレス"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  padding: "10px",
-                  marginBottom: "10px",
-                  width: "100%",
-                  boxSizing: "border-box",
-                }}
-              />
-              <input
-                type="password"
-                placeholder="パスワード"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{
-                  padding: "10px",
-                  marginBottom: "10px",
-                  width: "100%",
-                  boxSizing: "border-box",
-                }}
-              />
-              <button
-                type="submit"
-                style={{
-                  backgroundColor: "#007bff",
-                  color: "white",
-                  padding: "10px",
-                  border: "none",
-                  borderRadius: "5px",
-                  width: "100%",
-                  cursor: "pointer",
-                }}
-              >
-                ログイン
-              </button>
-            </div>
+          <form onSubmit={async (e) => {
+            e.preventDefault();
+            // ログイン処理
+          }}>
+            <input
+              type="email"
+              placeholder="メールアドレス"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '8px',
+                marginBottom: '10px',
+                borderRadius: '4px',
+                border: '1px solid #ddd'
+              }}
+            />
+            <input
+              type="password"
+              placeholder="パスワード"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '8px',
+                marginBottom: '10px',
+                borderRadius: '4px',
+                border: '1px solid #ddd'
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+                padding: '10px',
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                marginBottom: '10px'
+              }}
+            >
+              ログイン
+            </button>
           </form>
-
           <button
             style={{
-              backgroundColor: "#dc3545",
-              color: "white",
-              padding: "10px",
-              border: "none",
-              borderRadius: "5px",
-              width: "100%",
-              marginBottom: "10px",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              /* Google認証は後で実装 */
+              width: '100%',
+              padding: '10px',
+              backgroundColor: '#dc3545',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              marginBottom: '10px'
             }}
           >
             Googleでログイン
           </button>
-
           <button
             style={{
-              backgroundColor: "#28a745",
-              color: "white",
-              padding: "10px",
-              border: "none",
-              borderRadius: "5px",
-              width: "100%",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              /* 新規登録は後で実装 */
+              width: '100%',
+              padding: '10px',
+              backgroundColor: '#28a745',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer'
             }}
           >
             新規登録

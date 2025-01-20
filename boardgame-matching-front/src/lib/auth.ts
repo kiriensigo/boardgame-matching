@@ -27,3 +27,24 @@ export async function login(email: string, password: string) {
       throw error;
     }
   }
+
+  export async function logout() {
+    try {
+      const response = await fetch('http://localhost:3000/users/sign_out', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+  
+      if (!response.ok) {
+        throw new Error('ログアウトに失敗しました');
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error('ログアウトエラー:', error);
+      throw error;
+    }
+  }
