@@ -11,32 +11,37 @@ interface HeaderProps {
 
 export function Header({ email: initialEmail }: HeaderProps) {
   const router = useRouter();
-  const [email, setEmail] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(initialEmail);
 
   useEffect(() => {
-    // クライアントサイドでのみlocalStorageにアクセス
     const storedEmail = localStorage.getItem("userEmail");
     setEmail(storedEmail);
   }, []);
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/auth/sign_out", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "access-token": localStorage.getItem("access-token") || "",
-          client: localStorage.getItem("client") || "",
-          uid: localStorage.getItem("uid") || "",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/v1/auth/sign_out",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": localStorage.getItem("access-token") || "",
+            client: localStorage.getItem("client") || "",
+            uid: localStorage.getItem("uid") || "",
+          },
+        }
+      );
 
       if (response.ok) {
+        // サインアウト成功時の処理
         localStorage.removeItem("userEmail");
         localStorage.removeItem("access-token");
         localStorage.removeItem("client");
         localStorage.removeItem("uid");
-        router.push("/login");
+        router.push("/login"); // サインアウト後にログインページにリダイレクト
+      } else {
+        console.error("サインアウトに失敗しました。");
       }
     } catch (error) {
       console.error("Logout error:", error);
@@ -59,14 +64,6 @@ export function Header({ email: initialEmail }: HeaderProps) {
                 <span className="text-sm text-gray-600">
                   ようこそ、{email}さん！
                 </span>
-                <Link href="/profile">
-                  <Button
-                    variant="ghost"
-                    className="text-gray-600 hover:text-gray-900"
-                  >
-                    プロフィール
-                  </Button>
-                </Link>
                 <Button
                   onClick={handleLogout}
                   variant="ghost"
