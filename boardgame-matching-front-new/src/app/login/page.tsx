@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { setEmail } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -33,27 +35,14 @@ export default function LoginPage() {
       );
 
       if (response.ok) {
-        const data = await response.json();
-        // アクセストークンをlocalStorageに保存
-        localStorage.setItem("userEmail", formData.email);
-        const accessToken = response.headers.get("access-token");
-        const client = response.headers.get("client");
-        const uid = response.headers.get("uid");
-
-        if (accessToken && client && uid) {
-          localStorage.setItem("access-token", accessToken);
-          localStorage.setItem("client", client);
-          localStorage.setItem("uid", uid);
-        }
-
+        setEmail(formData.email); // コンテキストの状態を更新
         router.push("/"); // ログイン成功後にリダイレクト
       } else {
         const errorData = await response.json();
-        setError(errorData.errors.join(", ")); // エラーメッセージを表示
+        setError("ログインに失敗しました。");
       }
     } catch (error) {
       setError("サーバーとの通信に失敗しました。");
-      console.error("Login error:", error);
     }
   };
 
