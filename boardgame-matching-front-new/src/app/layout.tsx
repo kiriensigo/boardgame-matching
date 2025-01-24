@@ -1,12 +1,24 @@
-"use client";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { Providers } from "@/components/providers";
 
-import { AuthProvider } from "@/context/AuthContext";
+const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({ children }) {
+export const metadata: Metadata = {
+  title: "ボードバディーズ",
+  description: "ボードゲーム仲間を見つけよう！",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="ja">
-      <body>
-        <AuthProvider>{children}</AuthProvider>
+    <html lang="ja" suppressHydrationWarning>
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

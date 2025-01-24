@@ -1,13 +1,18 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Moon, Sun } from "lucide-react"
+import Link from "next/link";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Moon, Sun } from "lucide-react";
 
 export default function Header() {
-  const { setTheme } = useTheme()
+  const { setTheme } = useTheme();
 
   return (
     <header className="bg-background shadow-md">
@@ -23,17 +28,26 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/create-event" className="text-foreground hover:text-primary">
+              <Link
+                href="/create-event"
+                className="text-foreground hover:text-primary"
+              >
                 イベント作成
               </Link>
             </li>
             <li>
-              <Link href="/profile" className="text-foreground hover:text-primary">
+              <Link
+                href="/profile"
+                className="text-foreground hover:text-primary"
+              >
                 プロフィール
               </Link>
             </li>
             <li>
-              <Link href="/logout" className="text-foreground hover:text-primary">
+              <Link
+                href="/logout"
+                className="text-foreground hover:text-primary"
+              >
                 ログアウト
               </Link>
             </li>
@@ -50,14 +64,19 @@ export default function Header() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme("light")}>ライト</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>ダーク</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>システム</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                ライト
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                ダーク
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                システム
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
     </header>
-  )
+  );
 }
-

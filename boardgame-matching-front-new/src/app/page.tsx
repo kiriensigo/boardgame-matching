@@ -1,13 +1,13 @@
 "use client";
 
-import Header from "@/components/Header"; // ヘッダーをインポート
-import React from "react"; // Reactをインポート
-import Button from "@/components/ui/button"; // ボタンコンポーネントをインポート
+import Header from "@/components/Header";
+import React from "react";
+import { Button } from "@/components/ui/button";
 
 const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header /> {/* ヘッダーをここに追加 */}
+      <Header />
       <main className="flex-grow container mx-auto p-6">
         <h1 className="text-5xl font-bold text-center text-blue-700 mb-8">
           ボードゲーム仲間を見つけよう！
@@ -29,4 +29,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage; // デフォルトエクスポート
+export default HomePage;
