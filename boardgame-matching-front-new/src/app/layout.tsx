@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: "ボードゲーム仲間を見つけよう！",
 };
 
+
 export default function RootLayout({
   children,
 }: {
