@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "ボードバディーズ",
-  description: "ボードゲーム仲間を見つけよう！",
-};
-
 
 export default function RootLayout({
   children,
