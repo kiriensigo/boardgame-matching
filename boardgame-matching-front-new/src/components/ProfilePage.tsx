@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 
 export function ProfilePage() {
   return (
-    <div className="container mx-auto p-6">
+    <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">プロフィール設定</h1>
 
       <div className="bg-card shadow-md rounded-lg p-6">
