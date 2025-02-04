@@ -1,5 +1,11 @@
 import { ProfilePage } from "@/components/ProfilePage";
+import Header from "@/components/Header";
 
 export default function Page() {
-  return <ProfilePage />;
+  return (
+    <>
+      <Header />
+      <ProfilePage />
+    </>
+  );
 }

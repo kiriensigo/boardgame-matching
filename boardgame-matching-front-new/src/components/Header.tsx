@@ -10,9 +10,26 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
+import axios from "axios";
 
 export default function Header() {
   const { setTheme } = useTheme();
+
+  const handleLogout = async () => {
+    try {
+      await axios.delete("/api/v1/auth/sign_out", {
+        headers: {
+          "access-token": localStorage.getItem("access-token"),
+          client: localStorage.getItem("client"),
+          uid: localStorage.getItem("uid"),
+        },
+      });
+      // ログアウト成功時の処理
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("ログアウトに失敗しました", error);
+    }
+  };
 
   return (
     <header className="bg-background shadow-md">
@@ -45,7 +62,8 @@ export default function Header() {
             </li>
             <li>
               <Link
-                href="/logout"
+                href="#"
+                onClick={handleLogout}
                 className="text-foreground hover:text-primary"
               >
                 ログアウト
